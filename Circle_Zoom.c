@@ -62,14 +62,13 @@ void zoomout()
 void display()
 {
  for(int k=0;k<10;k++)
- {
- 	zoomin();
- 	zoomout(); }
+ { zoomin();
+   zoomout(); }
 }
  	
  	
 int main(int argc, char** argv)
-{ 	glutInit(&argc, argv); 
+{   glutInit(&argc, argv); 
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB); 
     glutInitWindowSize(800, 800); 
     glutInitWindowPosition(0, 0); 
