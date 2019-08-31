@@ -73,11 +73,9 @@ int main(int argc, char** argv)
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB); 
     glutInitWindowSize(800, 800); 
     glutInitWindowPosition(0, 0); 
-    glutCreateWindow("Assignment"); 
+    glutCreateWindow("Circle Zoom Animation"); 
     myInit(); 
-      
-    //glutKeyboardFunc(keys);
-	glutDisplayFunc(display); 
+    glutDisplayFunc(display); 
     glutMainLoop(); 
   	return 0;
 }
