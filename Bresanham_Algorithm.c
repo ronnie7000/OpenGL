@@ -1,20 +1,7 @@
 #include <stdio.h>
-#include <GL/gl.h>
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <string.h>
- 
-int width = 800, height = 800;
-
-void *font = GLUT_BITMAP_9_BY_15;
-void text(int x, int y, char *string)
-{
- int len, i;
- glRasterPos2f(x, y);
- len = strlen(string);
- for (i = 0; i < len; i++)
-  glutBitmapCharacter(font, string[i]);
-}
 
 void myInit()
 {
@@ -25,11 +12,14 @@ void myInit()
  gluOrtho2D(0.0, 800.0, 0.0, 800.0);
 }
 
-typedef struct
+void text(int x, int y, char *string)
 {
- GLint x;
- GLint y;
-} GLPOINT;
+ int len, i;
+ glRasterPos2f(x, y);
+ len = strlen(string);
+ for (i = 0; i < len; i++)
+  glutBitmapCharacter(GLUT_BITMAP_9_BY_15, string[i]);
+}
 
 void plot_point(int x,int y)
 {
@@ -39,6 +29,12 @@ void plot_point(int x,int y)
  glEnd();
  glFlush();
 }
+
+typedef struct
+{
+ GLint x;
+ GLint y;
+} GLPOINT;
 
 int round(float num)
 {
@@ -117,7 +113,7 @@ void Bresenham_algo(int x1, int y1, int x2, int y2)
  dx=(x2-x1);
  dy=(y2-y1);
  
- if(dy<=dx&&dy>0)
+ if((dy<=dx)&&(dy>0))
  {
   dx=abs(dx);
   dy=abs(dy);
@@ -143,7 +139,7 @@ void Bresenham_algo(int x1, int y1, int x2, int y2)
   }
  }
   
- else if(dy>dx&&dy>0)
+ else if((dy>dx)&&(dy>0))
  {
   dx=abs(dx);
   dy=abs(dy);
@@ -241,7 +237,6 @@ void Mouse(int button,int state,int x,int y)
  }
 }
 
-
 void Display()
 {
  glClear(GL_COLOR_BUFFER_BIT);
@@ -263,4 +258,3 @@ int main(int argc,char** argv)
  glutMainLoop();
  return 0;
 }
-
