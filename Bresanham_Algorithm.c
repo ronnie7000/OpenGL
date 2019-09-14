@@ -3,6 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+void text(int x, int y, char *string)
+{
+ int len, i;
+ glRasterPos2f(x, y);
+ len = strlen(string);
+ for (i = 0; i < len; i++)
+ glutBitmapCharacter(GLUT_BITMAP_9_BY_15, string[i]);
+}
+
 void myInit()
 {
  glClear(GL_COLOR_BUFFER_BIT);
@@ -12,14 +21,13 @@ void myInit()
  gluOrtho2D(0.0, 800.0, 0.0, 800.0);
 }
 
-void text(int x, int y, char *string)
+typedef struct
 {
- int len, i;
- glRasterPos2f(x, y);
- len = strlen(string);
- for (i = 0; i < len; i++)
-  glutBitmapCharacter(GLUT_BITMAP_9_BY_15, string[i]);
-}
+ GLint x;
+ GLint y;
+} GLPOINT;
+
+char buffer[20];
 
 void plot_point(int x,int y)
 {
@@ -30,39 +38,20 @@ void plot_point(int x,int y)
  glFlush();
 }
 
-typedef struct
-{
- GLint x;
- GLint y;
-} GLPOINT;
 
-int round(float num)
-{
- int val = (int)num;
- float diff = num-(val*1.0);
- if(diff <0.5)
-  return val;
- else
-  return val+1;         
-}
-
-int ax=0;
 
 void draw()
 {
 glClear(GL_COLOR_BUFFER_BIT);
 glColor3f(0.0,1.0,1.0);
 
-glBegin(GL_POINTS);
-for(ax;ax<800;ax=ax+10)
-{ 
- glVertex2f(ax,400);
- glVertex2f(400,ax);
-}
-glEnd();
-
-
 glBegin(GL_LINES);
+
+
+glVertex2f(400,799);
+glVertex2f(400,0);
+glVertex2f(799,400);
+glVertex2f(0,400);
 
 glVertex2f(400,799);
 glVertex2f(410,784);
@@ -113,7 +102,7 @@ void Bresenham_algo(int x1, int y1, int x2, int y2)
  dx=(x2-x1);
  dy=(y2-y1);
  
- if((dy<=dx)&&(dy>0))
+ if(dy<=dx&&dy>0)
  {
   dx=abs(dx);
   dy=abs(dy);
@@ -139,7 +128,7 @@ void Bresenham_algo(int x1, int y1, int x2, int y2)
   }
  }
   
- else if((dy>dx)&&(dy>0))
+ else if(dy>dx&&dy>0)
  {
   dx=abs(dx);
   dy=abs(dy);
@@ -228,10 +217,14 @@ void Mouse(int button,int state,int x,int y)
   coordinate[count].x = x;
   coordinate[count].y = 800 - y;
   count++;
-  
+  sprintf(buffer,"X: %d, Y: %d",coordinate[0].x,coordinate[0].y);
+  text(coordinate[0].x+5,coordinate[0].y-5,buffer);
  }
  if(count == 2)
  { 
+ float m = ((float)coordinate[1].y-(float)coordinate[0].y)/((float)coordinate[1].x-(float)coordinate[0].x);
+ sprintf(buffer,"X: %d, Y: %d, Slope = %f",coordinate[1].x,coordinate[0].y,m);
+ text(coordinate[1].x+5,coordinate[1].y-5,buffer);
  pre_bresenham(coordinate[0].x, coordinate[0].y, coordinate[1].x, coordinate[1].y);
  count=0;
  }
