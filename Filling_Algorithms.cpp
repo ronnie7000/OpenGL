@@ -1,7 +1,8 @@
 #include<GL/glut.h>
-#include<stdio.h>
+#include<iostream>
 #include<math.h>
 #include<string.h>
+using namespace std;
 
 void text(int x, int y, char *string)
 {
@@ -17,7 +18,7 @@ void init()
  glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
  glutInitWindowPosition(10,10);
  glutInitWindowSize(800, 800);
- glutCreateWindow("Liang Barsky Algorithm");
+ glutCreateWindow("Filling Algorithm");
  gluOrtho2D(0,800,0,800); 
 }
 
